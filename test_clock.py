@@ -1,5 +1,6 @@
 from appium import webdriver
 import unittest
+import HtmlTestRunner
 
 
 class ClockTest(unittest.TestCase):
@@ -26,7 +27,7 @@ class ClockTest(unittest.TestCase):
 
         # Check that Alarm was added
         self.assertTrue(self.driver.find_element_by_accessibility_id('4:30 PM'))
-        self.driver.implicitly_wait()
+        self.driver.implicitly_wait(1)
         # remove Alarm
         self.driver.find_element_by_id('com.google.android.deskclock:id/delete').click()
 
@@ -63,6 +64,9 @@ class ClockTest(unittest.TestCase):
         self.driver.find_element_by_id("com.google.android.deskclock:id/fab").click()
         assert int(self.driver.find_element_by_id("com.google.android.deskclock:id/stopwatch_time_text").text) > 1
 
+    def tearDown(self):
+        self.driver.quit()
+
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='test_reports', report_name="Appium Test Report"))
